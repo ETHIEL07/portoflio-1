@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethiel - Développeur Full Stack</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary: #6c63ff; --secondary: #4d44db; --dark: #2d2b3a; --light: #f8f9fa; --accent: #ff6584; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--light); color: var(--dark); overflow-x: hidden; }
+        .bg-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+        .circle { position: absolute; border-radius: 50%; filter: blur(50px); opacity: 0.2; animation: float 15s infinite linear; }
+        @keyframes float { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-50px) rotate(10deg); } }
+        header { padding: 2rem 5%; display: flex; justify-content: space-between; align-items: center; background-color: rgba(248, 249, 250, 0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
+        nav ul { display: flex; gap: 2rem; list-style: none; }
+        nav a { text-decoration: none; color: var(--dark); font-weight: 500; transition: color 0.3s; position: relative; }
+        nav a:hover { color: var(--primary); }
+        nav a::after { content: ''; position: absolute; width: 0; height: 2px; background: var(--primary); bottom: -4px; left: 0; transition: width 0.3s; }
+        nav a:hover::after { width: 100%; }
+        .hero { height: 90vh; display: flex; align-items: center; padding: 0 5%; }
+        .hero-content { max-width: 600px; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1.5rem; line-height: 1.2; }
+        .hero h1 span { color: var(--primary); }
+        .hero p { font-size: 1.2rem; margin-bottom: 2rem; color: #555; }
+        .btn { display: inline-block; padding: 0.8rem 1.8rem; background: var(--primary); color: white; border-radius: 50px; text-decoration: none; font-weight: 500; transition: all 0.3s; }
+        .btn:hover { background: var(--secondary); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(108, 99, 255, 0.3); }
+        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); margin-left: 1rem; }
+        .btn-outline:hover { background: var(--primary); color: white; }
+        .section { padding: 6rem 5%; }
+        .section-title { text-align: center; margin-bottom: 4rem; }
+        .section-title h2 { font-size: 2.5rem; color: var(--dark); margin-bottom: 1rem; }
+        .section-title p { color: #777; max-width: 600px; margin: 0 auto; }
+        .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .skill-card { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); transition: all 0.3s; text-align: center; }
+        .skill-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); }
+        .skill-icon { font-size: 3rem; margin-bottom: 1.5rem; color: var(--primary); }
+        .projects-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .project-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); transition: all 0.3s; }
+        .project-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); }
+        .project-img { height: 200px; overflow: hidden; }
+        .project-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .project-card:hover .project-img img { transform: scale(1.1); }
+        .project-content { padding: 1.5rem; }
+        .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .tag { background: #eee; padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.8rem; color: #555; }
+        .project-links { display: flex; gap: 1rem; }
+        .project-links a { text-decoration: none; color: var(--primary); font-weight: 500; display: flex; align-items: center; gap: 0.5rem; }
+        .contact-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; }
+        .contact-item { display: flex; align-items: center; gap: 1rem; }
+        .contact-icon { width: 50px; height: 50px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .contact-form { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); }
+        footer { background: var(--dark); color: white; padding: 3rem 5%; text-align: center; }
+        .social-links { display: flex; justify-content: center; gap: 1.5rem; margin: 2rem 0; }
+        .social-link { width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .social-link:hover { background: var(--primary); transform: translateY(-3px); }
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 1.5rem; }
+            nav ul { gap: 1rem; }
+            .hero { text-align: center; height: auto; padding: 5rem 5%; }
+            .btn-outline { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+    
+    <header>
+        <div class="logo">Ethiel<span>.</span></div>
+        <nav>
+            <ul>
+                <li><a href="#home">Accueil</a></li>
+                <li><a href="#skills">Compétences</a></li>
+                <li><a href="#projects">Projets</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Bonjour, je suis <span>Ethiel</span>,<br> Développeur Full Stack</h1>
+            <p>Expert en développement web avec 5 ans d'expérience. Je crée des applications performantes et des sites web dynamiques pour répondre à vos besoins techniques.</p>
+            <div class="hero-btns">
+                <a href="#projects" class="btn">Voir mes projets</a>
+                <a href="#contact" class="btn btn-outline">Me contacter</a>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section" id="skills">
+        <div class="section-title">
+            <h2>Mes Compétences</h2>
+            <p>Technologies que je maîtrise pour vos projets web et applications.</p>
+        </div>
+        <div class="skills-container">
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-code"></i></div>
+                <h3>Frontend</h3>
+                <p>React, Vue.js, HTML5, CSS3, JavaScript ES6+, TailwindCSS</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-server"></i></div>
+                <h3>Backend</h3>
+                <p>Node.js, Express, Django, PHP, Bases de données SQL/NoSQL</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h3>Mobile</h3>
+                <p>React Native, Flutter, Applications hybrides et natives</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section" id="projects">
+        <div class="section-title">
+            <h2>Mes Projets Récents</h2>
+            <p>Quelques réalisations qui démontrent mon expertise.</p>
+        </div>
+        <div class="projects-container">
+            <div class="project-card">
+                <div class="project-img">
+                    <img src="https://source.unsplash.com/random/600x400/?ecommerce" alt="Site E-commerce">
+                </div>
+                <div class="project-content">
+                    <h3>Plateforme E-commerce</h3>
+                    <p>Solution complète avec paiement en ligne et gestion des stocks.</p>
+                    <div class="tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">MongoDB</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://exemple-projet-ecommerce.com" target="_blank" rel="noopener noreferrer">
+                            <i class="fas fa-link"></i> Voir le projet
+                        </a>
+                        <a href="https://github.com/votre-compte/projet-ecommerce" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github"></i> Code source
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-img">
+                    <img src="https://source.unsplash.com/random/600x400/?app" alt="Application Web">
+                </div>
+                <div class="project-content">
+                    <h3>Application de Gestion</h3>
+                    <p>Outil SaaS pour la gestion des ressources d'entreprise.</p>
+                    <div class="tags">
+                        <span class="tag">Vue.js</span>
+                        <span class="tag">Firebase</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://exemple-app-gestion.com" target="_blank" rel="noopener noreferrer">
+                            <i class="fas fa-link"></i> Voir le projet
+                        </a>
+                        <a href="https://github.com/votre-compte/app-gestion" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github"></i> Code source
+                       
